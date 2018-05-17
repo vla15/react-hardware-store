@@ -1,16 +1,12 @@
-package com.example.models;
+package com.example.storeapi.models;
 
 import lombok.*;
 
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@Entity
-@Table(name = "STORE")
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@Entity @Table(name = "STORE")
 public class Store {
 
     @Id
@@ -25,4 +21,10 @@ public class Store {
 
     @Column(name = "PRICE")
     private int price;
+
+    public Store(String productName, String description, int price) {
+        this.productName = productName;
+        this.description = description;
+        this.price = price;
+    }
 }

@@ -26,6 +26,12 @@ class HomePage extends Component {
     };
   }
 
+  componentDidMount() {
+    fetch("/store")
+      .then(data => data.json())
+      .then(r => console.log(r))
+  }
+
   logInAsAdmin = () => {
     this.setState({isAdmin: !this.state.isAdmin})
   }
