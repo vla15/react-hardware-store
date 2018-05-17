@@ -6,14 +6,14 @@ class ProductList extends Component {
   render() {
     const productList = this.props.productList;
     const isAdmin = this.props.isAdmin;
-
+    console.log(productList);
     const productComponents = productList.map((product, index) => {
       return <Product
         productName={product.productName}
         description={product.description}
         price={product.price}
-        key={index} 
-        index={index}
+        id={product.id}
+        key={product.id} 
         isAdmin={isAdmin}
         deleteProductFromProductList={this.props.deleteProductFromProductList}/>;
     });

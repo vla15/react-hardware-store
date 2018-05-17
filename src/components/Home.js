@@ -15,10 +15,13 @@ class HomePage extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch("/store")
-      .then(data => data.json())
-      .then(productList => this.setState({productList}))
+  async componentDidMount() {
+    try {
+      const productList = await fetch("/store").then(result => result.json())
+      this.setState({productList})
+    } catch (err) {
+      console.log('error, couldn\'t load date', err);
+    }
   }
 
   logInAsAdmin = () => {
@@ -39,19 +42,27 @@ class HomePage extends Component {
     try {
         let response = await fetch("/store", {
         method: 'POST',
-        body: newProduct
+        body: JSON.stringify(newProduct),
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
       })
+      const productFromDb = await response.json();
       const productList = [...this.state.productList];
-      productList.push(newProduct);
+      productList.push(productFromDb);
       this.setState({ productList });
     } catch(error) {
       console.log('error', error);
     }
   };
 
-  deleteProductFromProductList = async (index) => {
+  deleteProductFromProductList = async (id) => {
+    await fetch(`/store/${id}`, {
+      method: 'DELETE'
+    })
     let productList = [...this.state.productList];
-    productList.splice(index, 1);
+    let targetIndex = productList.findIndex(product => product.id === id);
+    productList.splice(targetIndex, 1);
     this.setState({ productList });
   }
 
