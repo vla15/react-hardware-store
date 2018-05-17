@@ -1,6 +1,6 @@
 CREATE TABLE STORE (
 ID serial,
-TITLE varchar(100),
+PRODUCT_NAME varchar(100),
 DESCRIPTION VARCHAR(400),
-AMOUNT integer
-)
+PRICE integer
+);

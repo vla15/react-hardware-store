@@ -17,12 +17,12 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "TITLE")
-    private String title;
+    @Column(name = "PRODUCT_NAME")
+    private String productName;
 
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "AMOUNT")
-    private int amount;
+    @Column(name = "PRICE")
+    private int price;
 }
