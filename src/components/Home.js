@@ -10,18 +10,7 @@ class HomePage extends Component {
     this.state = {
       itemCurrentlyOnSale: 'A Hammer',
       editSaleItem: true,
-      productList: [
-        {
-          productName: 'Hammer',
-          description: 'Itsa hammer',
-          price: 12.3,
-        },
-        {
-          productName: 'Nail',
-          description: 'Itsa nail',
-          price: 0.12,
-        }
-      ],
+      productList: [],
       isAdmin: false
     };
   }
@@ -29,7 +18,7 @@ class HomePage extends Component {
   componentDidMount() {
     fetch("/store")
       .then(data => data.json())
-      .then(r => console.log(r))
+      .then(productList => this.setState({productList}))
   }
 
   logInAsAdmin = () => {
@@ -46,13 +35,21 @@ class HomePage extends Component {
     this.setState({ editSaleItem });
   };
 
-  addNewProductToProductList = (newProduct) => {
-    const productList = [...this.state.productList];
-    productList.push(newProduct);
-    this.setState({ productList });
+  addNewProductToProductList = async (newProduct) => {
+    try {
+        let response = await fetch("/store", {
+        method: 'POST',
+        body: newProduct
+      })
+      const productList = [...this.state.productList];
+      productList.push(newProduct);
+      this.setState({ productList });
+    } catch(error) {
+      console.log('error', error);
+    }
   };
 
-  deleteProductFromProductList = (index) => {
+  deleteProductFromProductList = async (index) => {
     let productList = [...this.state.productList];
     productList.splice(index, 1);
     this.setState({ productList });
